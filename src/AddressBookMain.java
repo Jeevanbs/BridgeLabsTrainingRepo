@@ -1,6 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class AddressBookMain {
 	static public Map<String, AddressBookVo> addressBk = new HashMap<String, AddressBookVo>();
@@ -30,6 +31,10 @@ public class AddressBookMain {
 			case 4:
 				deleteContact(stdin);
 				break;
+			
+			case 5:
+				createMultipleContact(stdin);
+				break;
 
 			default:
 				loopController = false;
@@ -37,6 +42,16 @@ public class AddressBookMain {
 			}
 		}
 	}
+
+	
+	private static void createMultipleContact(Scanner stdin) {
+		System.out.println("Enter Number of contacts to be created");
+		int count = stdin.nextInt();
+		IntStream.range(0, count).forEach(contact -> {
+			createNewContact(stdin);
+		});
+	}
+
 
 	private static void deleteContact(Scanner stdin) {
 		System.out.println("Enter First Name to delete the record");
