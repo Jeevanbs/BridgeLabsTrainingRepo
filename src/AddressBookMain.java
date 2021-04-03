@@ -59,12 +59,42 @@ public class AddressBookMain {
 			case 8:
 				viewPersonsByStateAndCity();
 				break;
+				
+			case 9:
+				countByCityAndState(stdin);
+				break;
 
 			default:
 				loopController = false;
 				break;
 			}
 		}
+	}
+
+
+	private static void countByCityAndState(Scanner stdin) {
+		System.out.println("Enter City to be searched");
+		String city = stdin.next();
+		System.out.println("Enter State to be searched");
+		String state = stdin.next();
+		//Map<String, AddressBookVo> filteredMap = new HashMap<String, AddressBookVo>();
+		
+		addressBookListNames.forEach(addressBookName -> {
+			Map<String, AddressBookVo>  addressBook = addressBookMap.get(addressBookName);
+			Long count = addressBook.entrySet().stream()
+					.filter(a -> a.getValue().getCity().equals(city))
+					.count();
+			System.out.println("Number of records in AddressBook " + addressBookName + "For City " + city + " is " +  count);
+		});
+		
+		
+		addressBookListNames.forEach(addressBookName -> {
+			Map<String, AddressBookVo>  addressBook = addressBookMap.get(addressBookName);
+			Long count = addressBook.entrySet().stream()
+					.filter(a -> a.getValue().getState().equals(state))
+					.count();
+			System.out.println("Number of records in AddressBook " + addressBookName + "For state " + state + " is " +  count);
+		});
 	}
 
 
