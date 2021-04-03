@@ -55,12 +55,32 @@ public class AddressBookMain {
 			case 7:
 				searchAddrBkBasedOnCityOrState(stdin);
 				break;
+			
+			case 8:
+				viewPersonsByStateAndCity();
+				break;
 
 			default:
 				loopController = false;
 				break;
 			}
 		}
+	}
+
+
+	private static void viewPersonsByStateAndCity() {
+		
+		addressBookListNames.forEach(addressBookName -> {
+			Map<String, AddressBookVo>  addressBook = addressBookMap.get(addressBookName);
+			System.out.println("Records of AddressBooks With person and State: " + addressBook);
+			addressBook.forEach((firstName, vo)-> System.out.println(firstName + " " + vo.getState()));
+		});
+		
+		addressBookListNames.forEach(addressBookName -> {
+			Map<String, AddressBookVo>  addressBook = addressBookMap.get(addressBookName);
+			System.out.println("Records of AddressBooks With person and City: " + addressBook);
+			addressBook.forEach((firstName, vo)-> System.out.println(firstName + " " + vo.getCity()));
+		});
 	}
 
 
@@ -76,6 +96,7 @@ public class AddressBookMain {
 			Map<String, AddressBookVo> filteredMap = addressBook.entrySet().stream()
 					.filter(a -> a.getValue().getCity().equals(city) || a.getValue().getState().equals(state))
 					.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+			System.out.println("Records of AddressBooks: " + addressBook);
 			filteredMap.forEach((firstName, vo)-> System.out.println(firstName + " " + vo));
 		});
 	}
