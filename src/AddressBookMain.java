@@ -11,13 +11,13 @@ import java.util.stream.IntStream;
 public class AddressBookMain {
 	static public List<String> addressBookListNames = new LinkedList<String>();
 	static public Map<String, Map<String, AddressBookVo>> addressBookMap = new HashMap<String, Map<String,AddressBookVo>>();
-	
+
 	public static void main(String[] args) {
 		System.out.println("Welcome to Address Book Program");
 		Map<String, AddressBookVo> addressBook = new HashMap<String, AddressBookVo>();
 		addressBookMap.put("addressBook1",addressBook);
 		addressBookListNames.add("addressBook1");
-		
+
 		Boolean loopController = true;
 		while(loopController) {
 			Scanner stdin = new Scanner(System.in);
@@ -33,19 +33,19 @@ public class AddressBookMain {
 			case 2:
 				editExistingContact(stdin);
 				break;
-				
+
 			case 3:
 				viewAddressBook();
 				break;
-			
+
 			case 4:
 				deleteContact(stdin);
 				break;
-			
+
 			case 5:
 				createMultipleContact(stdin);
 				break;
-			
+
 			case 6:
 				createNewAddressBook(stdin);
 				break;
@@ -57,7 +57,7 @@ public class AddressBookMain {
 		}
 	}
 
-	
+
 	private static void createNewAddressBook(Scanner stdin) {
 		System.out.println("Enter AddressBook Name to be created");
 		String addrBkName = stdin.next();
@@ -86,7 +86,7 @@ public class AddressBookMain {
 		int selct = stdin.nextInt();
 		String addressBkName = addressBookListNames.get(selct);
 		Map<String, AddressBookVo>  addressBook = addressBookMap.get(addressBkName);
-		
+
 		System.out.println("Enter First Name to delete the record");
 		String firstName = stdin.next();
 		if(addressBook.containsKey(firstName)) {
@@ -95,7 +95,7 @@ public class AddressBookMain {
 		}else {
 			System.out.println("Firstname doesn't exist - " + firstName);
 		}
-		
+
 	}
 
 	private static void viewAddressBook() {
@@ -115,7 +115,7 @@ public class AddressBookMain {
 		Map<String, AddressBookVo>  addressBook = addressBookMap.get(addressBkName);
 		System.out.println("Enter First Name ");
 		String firstName = stdin.next();
-		
+
 		if(addressBook.containsKey(firstName)) {
 			AddressBookVo vo = addressBook.get(firstName);
 			System.out.println("Enter the choice of info to update : 1.LastName 2.Address 3.City 4.State 5.pincode 6.Phone Number 7.Email ");
@@ -173,35 +173,39 @@ public class AddressBookMain {
 		int selct = stdin.nextInt();
 		String addressBkName = addressBookListNames.get(selct);
 		Map<String, AddressBookVo>  addrBk = addressBookMap.get(addressBkName);
-		
+
 		AddressBookVo vo = new AddressBookVo();
 		System.out.println("Enter First Name ");
 		String firstName = stdin.next();
-		vo.setFirstName(firstName);
-		System.out.println("Enter Last Name ");
-		String lastName = stdin.next();
-		vo.setLastName(lastName);
-		System.out.println("Enter Address ");
-		String address = stdin.next();
-		vo.setAddress(address);
-		System.out.println("Enter City ");
-		String city = stdin.next();
-		vo.setCity(city);
-		System.out.println("Enter State ");
-		String state = stdin.next();
-		vo.setState(state);
-		System.out.println("Enter pincode ");
-		Long pincode = stdin.nextLong();
-		vo.setPincode(pincode);
-		System.out.println("Enter Phone Number ");
-		Long phoneNo = stdin.nextLong();
-		vo.setPhoneNumber(phoneNo);
-		System.out.println("Enter Email ");
-		String email = stdin.next();
-		vo.setEmail(email);
-		addrBk.put(firstName, vo);
-		addressBookMap.put(addressBkName, addrBk);
-		System.out.println("Contact Created with name : " + vo);
+		if(!addrBk.containsKey(firstName)) {
+			vo.setFirstName(firstName);
+			System.out.println("Enter Last Name ");
+			String lastName = stdin.next();
+			vo.setLastName(lastName);
+			System.out.println("Enter Address ");
+			String address = stdin.next();
+			vo.setAddress(address);
+			System.out.println("Enter City ");
+			String city = stdin.next();
+			vo.setCity(city);
+			System.out.println("Enter State ");
+			String state = stdin.next();
+			vo.setState(state);
+			System.out.println("Enter pincode ");
+			Long pincode = stdin.nextLong();
+			vo.setPincode(pincode);
+			System.out.println("Enter Phone Number ");
+			Long phoneNo = stdin.nextLong();
+			vo.setPhoneNumber(phoneNo);
+			System.out.println("Enter Email ");
+			String email = stdin.next();
+			vo.setEmail(email);
+			addrBk.put(firstName, vo);
+			addressBookMap.put(addressBkName, addrBk);
+			System.out.println("Contact Created with name : " + vo);
+		}else {
+			System.out.println("FirstName Already Exists Cannot Duplicate + " + firstName);
+		}
 	}
 
 }
