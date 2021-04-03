@@ -1,3 +1,4 @@
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -6,6 +7,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class AddressBookMain {
@@ -50,11 +52,32 @@ public class AddressBookMain {
 				createNewAddressBook(stdin);
 				break;
 
+			case 7:
+				searchAddrBkBasedOnCityOrState(stdin);
+				break;
+
 			default:
 				loopController = false;
 				break;
 			}
 		}
+	}
+
+
+	private static void searchAddrBkBasedOnCityOrState(Scanner stdin) {
+		System.out.println("Enter City to be searched");
+		String city = stdin.next();
+		System.out.println("Enter State to be searched");
+		String state = stdin.next();
+		//Map<String, AddressBookVo> filteredMap = new HashMap<String, AddressBookVo>();
+		
+		addressBookListNames.forEach(addressBookName -> {
+			Map<String, AddressBookVo>  addressBook = addressBookMap.get(addressBookName);
+			Map<String, AddressBookVo> filteredMap = addressBook.entrySet().stream()
+					.filter(a -> a.getValue().getCity().equals(city) || a.getValue().getState().equals(state))
+					.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+			filteredMap.forEach((firstName, vo)-> System.out.println(firstName + " " + vo));
+		});
 	}
 
 
